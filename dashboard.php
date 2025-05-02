@@ -1,0 +1,9 @@
+<h2>Dashboard</h2>
+<table>
+    <tr>
+        <th>Nama</th>
+        <th>NIM</th>
+        <th>Jurusan</th>
+        <th>Action</th>
+    </tr>
+</table>
