@@ -2,8 +2,8 @@
 require_once '../Helpers/Helper.php';
 $kode_buku = Helper::generateKdBuku();
 ?>
-<div class="p-6 ml-2 bg-white text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full rounded-lg">
-    <div class="md:flex">
+<div class="p-6 md:ml-2 bg-white text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full rounded-lg">
+    <div class="flex items-center">
         <h3 class="text-lg font-bold text-xl text-violet-800 dark:text-violet-600 flex-1">Data Buku</h3>
         <button data-modal-target="add-modal" data-modal-toggle="add-modal" type="button" class="px-3 py-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-green-700 rounded-md hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
             <svg class=" w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@ $kode_buku = Helper::generateKdBuku();
                     Tahun Terbit
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Proses
+                    Kemajuan Literasi
                 </th>
                 <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Edit</span>
@@ -73,37 +73,19 @@ $kode_buku = Helper::generateKdBuku();
                     <td class="px-6 py-4 text-right">
                         <!-- inline-flex 2 button popover and modal edit and delete  -->
                         <div class="inline-flex items-center justify-center w-full">
-                            <button id="dropdownDefault" data-dropdown-toggle="dropdown" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button" aria-expanded="false" data-dropdown-placement="bottom-end">
-                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 7h15M1 14h15M1 1h15" />
-                                </svg>
-                            </button>
-
-                            <div id="dropdown" class="hidden z-10 w-44 bg-white rounded-lg shadow dark:bg-gray-700" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="bottom-end" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(0px, 0px, 0px);">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefault">
-                                    <li>
-                                        <a href="../Requests/BookRequest.php?action=edit&kd_buku=<?= $book[0] ?>" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                    </li>
-                                    <li>
-                                        <a href="../Requests/BookRequest.php?action=delete&kd_buku=<?= $book[0] ?>" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="hidden sm:inline-flex items-center gap-2 justify-center w-full">
+                            <div class="inline-flex items-center gap-2 justify-center w-full">
                                 <?php $lowerAndNotDash = strtolower(str_replace('-', '', $book[0])); ?>
                                 <button data-modal-target="edit-modal<?= $lowerAndNotDash ?>" data-modal-toggle="edit-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-violet-700 rounded-md hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
-                                    <svg class=" w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                                     </svg>
                                     <span class="sr-only">Edit</span>
                                 </button>
 
                                 <button data-modal-target="delete-modal<?= $lowerAndNotDash ?>" data-modal-toggle="delete-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-red-700 rounded-md hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
-                                    <svg class=" w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <svg class=" w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                                     </svg>
-
                                     <span class="sr-only">Delete</span>
                                 </button>
 
