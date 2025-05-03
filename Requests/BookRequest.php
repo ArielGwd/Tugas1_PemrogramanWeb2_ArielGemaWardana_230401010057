@@ -59,7 +59,7 @@ switch ($_GET['action'] ?? '') {
         break;
 
     case 'delete':
-        $kd_buku = $_GET['kd_buku'];
+        $kd_buku = $_POST['kd_buku'];
 
         $data = $koneksi->prepare("DELETE FROM books WHERE kd_buku=?");
         $data->bind_param("s", $kd_buku);
