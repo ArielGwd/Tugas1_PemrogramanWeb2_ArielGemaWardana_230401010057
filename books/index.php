@@ -65,8 +65,17 @@
 
     <script src="../assets/js/static.js"></script>
     <script src="../node_modules/flowbite/dist/flowbite.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
-
+    <script src="../node_modules/simple-datatables/dist/umd/simple-datatables.js"></script>
+    <script>
+        if (document.getElementById("pagination-table") && typeof simpleDatatables.DataTable !== "undefined") {
+            const dataTable = new simpleDatatables.DataTable("#pagination-table", {
+                paging: true,
+                perPage: 5,
+                perPageSelect: [5, 10, 15, 20, 25],
+                sortable: false,
+            });
+        }
+    </script>
 </body>
 
 </html>
