@@ -10,14 +10,18 @@ switch ($_GET['action'] ?? '') {
         $year_published = $_POST['year_published'];
         $progress = $_POST['progress'];
 
-        // Check if kd_buku already exists
+        if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($progress)) {
+            echo "All fields are required. <script>window.location.href='../books/index.php';</script>";
+            break;
+        }
+
         $check = $koneksi->prepare("SELECT kd_buku FROM books WHERE kd_buku = ?");
         $check->bind_param("s", $kd_buku);
         $check->execute();
         $check->store_result();
 
         if ($check->num_rows > 0) {
-            echo " Duplicate entry for kd_buku '$kd_buku'. <script>window.location.href='../books/index.php';</script>";
+            echo "Duplicate entry for kd_buku '$kd_buku'. <script>window.location.href='../books/index.php';</script>";
         } else {
             $data = $koneksi->prepare("INSERT INTO books (kd_buku, title, author, year_published, progress) VALUES (?, ?, ?, ?, ?)");
             $data->bind_param("sssss", $kd_buku, $title, $author, $year_published, $progress);
@@ -37,6 +41,11 @@ switch ($_GET['action'] ?? '') {
         $author = $_POST['author'];
         $year_published = $_POST['year_published'];
         $progress = $_POST['progress'];
+
+        if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($progress)) {
+            echo "All fields are required. <script>window.location.href='../books/index.php';</script>";
+            break;
+        }
 
         $data = $koneksi->prepare("UPDATE books SET title=?, author=?, year_published=?, progress=? WHERE kd_buku=?");
         $data->bind_param("sssss", $title, $author, $year_published, $progress, $kd_buku);
