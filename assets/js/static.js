@@ -6,15 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    document.body.classList.add("cursor-not-allowed");
-    btn.classList.add("cursor-not-allowed");
+    document.body.classList.add("cursor-progress");
+    btn.classList.add("cursor-progress");
     spinner.classList.remove("hidden");
     btnText.textContent = "Loading...";
     btnText.classList.add("text-gray-500");
 
     setTimeout(() => {
-      document.body.classList.remove("cursor-not-allowed");
-      btn.classList.remove("cursor-not-allowed");
+      document.body.classList.remove("cursor-progress");
+      btn.classList.remove("cursor-progress");
       spinner.classList.add("hidden");
       btnText.textContent = "Submit";
       btnText.classList.remove("text-gray-500");
@@ -31,15 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
   forms.forEach((form, index) => {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      document.body.classList.add("cursor-not-allowed");
-      btns[index].classList.add("cursor-not-allowed");
+      document.body.classList.add("cursor-progress");
+      btns[index].classList.add("cursor-progress");
       spinners[index].classList.remove("hidden");
       btnTexts[index].textContent = "Loading...";
       btnTexts[index].classList.add("text-gray-500");
 
       setTimeout(() => {
-        document.body.classList.remove("cursor-not-allowed");
-        btns[index].classList.remove("cursor-not-allowed");
+        document.body.classList.remove("cursor-progress");
+        btns[index].classList.remove("cursor-progress");
         spinners[index].classList.add("hidden");
         btnTexts[index].textContent = "Submit";
         btnTexts[index].classList.remove("text-gray-500");

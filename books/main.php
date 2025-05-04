@@ -4,7 +4,10 @@ $kode_buku = Helper::generateKdBuku();
 ?>
 <div class="p-6 md:ml-2 bg-white text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full rounded-lg">
     <div class="flex items-center">
-        <h3 class="text-lg font-bold text-xl text-violet-800 dark:text-violet-600 flex-1">Data Buku</h3>
+        <div class=" flex-1">
+            <h3 class="text-lg font-bold text-xl text-violet-800 dark:text-violet-600">Data Buku</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Berikut adalah data buku yang anda baca</p>
+        </div>
         <button data-modal-target="add-modal" data-modal-toggle="add-modal" type="button" class="px-3 py-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-green-700 rounded-md hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
             <svg class=" w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path>
@@ -15,7 +18,7 @@ $kode_buku = Helper::generateKdBuku();
 </div>
 
 <div class="relative overflow-x-auto pt-2 pl-2 mt-6">
-    <table id="pagination-table">
+    <table id="pagination-table" class="bg-white w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead>
             <tr>
                 <th scope="col" class="px-6 py-3">
