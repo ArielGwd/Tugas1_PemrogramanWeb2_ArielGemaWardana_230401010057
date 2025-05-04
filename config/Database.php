@@ -4,12 +4,16 @@ class Database
 {
     public function connect()
     {
-        $koneksi = new mysqli('localhost', 'root', '', 'tugas_web2_arielgema');
+        $host = 'localhost';
+        $user = 'root';
+        $password = '';
+        $database = 'tugas_web2_arielgema';
 
-        if ($koneksi->connect_errno) {
-            die("Koneksi Gagal: " . $koneksi->connect_errno . ' - ' . $koneksi->connect_error . "\n");
+        try {
+            $koneksi = new mysqli($host, $user, $password, $database);
+            return $koneksi;
+        } catch (Exception $e) {
+            die('Koneksi Gagal: ' . $e->getMessage() . '\n');
         }
-
-        return $koneksi;
     }
 }
