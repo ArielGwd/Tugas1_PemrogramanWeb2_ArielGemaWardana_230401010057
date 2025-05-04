@@ -11,7 +11,7 @@ switch ($_GET['action'] ?? '') {
         $progress = $_POST['progress'];
 
         if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($progress)) {
-            echo "All fields are required. <script>window.location.href='../books/index.php';</script>";
+            header("Location: ../books/index.php");
             break;
         }
 
@@ -30,7 +30,8 @@ switch ($_GET['action'] ?? '') {
             if (!$data) {
                 die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
             } else {
-                echo "<script>window.location.href='../books/index.php';</script>";
+                header("Location: ../books/index.php");
+                exit();
             }
         }
         break;
@@ -43,8 +44,20 @@ switch ($_GET['action'] ?? '') {
         $progress = $_POST['progress'];
 
         if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($progress)) {
-            echo "All fields are required. <script>window.location.href='../books/index.php';</script>";
-            break;
+            header("Location: ../books/index.php");
+            exit();
+        }
+
+        $check = $koneksi->prepare("SELECT progress FROM books WHERE kd_buku = ?");
+        $check->bind_param("s", $kd_buku);
+        $check->execute();
+        $result = $check->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row && $row['progress'] === 'selesai') {
+            $progress = 'selesai';
+            header("Location: ../books/index.php?message=Update successful.");
+            exit();
         }
 
         $data = $koneksi->prepare("UPDATE books SET title=?, author=?, year_published=?, progress=? WHERE kd_buku=?");
@@ -54,7 +67,8 @@ switch ($_GET['action'] ?? '') {
         if (!$data) {
             die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
         } else {
-            echo "<script>window.location.href='../books/index.php';</script>";
+            header("Location: ../books/index.php");
+            exit();
         }
         break;
 
@@ -68,7 +82,8 @@ switch ($_GET['action'] ?? '') {
         if (!$data) {
             die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
         } else {
-            echo "<script>window.location.href='../books/index.php';</script>";
+            header("Location: ../books/index.php");
+            exit();
         }
         break;
 
