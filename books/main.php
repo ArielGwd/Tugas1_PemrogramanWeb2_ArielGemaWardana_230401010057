@@ -18,7 +18,7 @@ $kode_buku = Helper::generateKdBuku();
 </div>
 
 <div class="relative overflow-x-auto pt-2 pl-2 mt-6">
-    <table id="pagination-table" class="bg-white w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <table id="pagination-table" class="bg-white w-full text-sm text-left text-gray-500 dark:text-gray-400 rounded-lg">
         <thead>
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -78,19 +78,31 @@ $kode_buku = Helper::generateKdBuku();
                         <div class="inline-flex items-center justify-center w-full">
                             <div class="inline-flex items-center gap-2 justify-center w-full">
                                 <?php $lowerAndNotDash = strtolower(str_replace('-', '', $book[0])); ?>
-                                <button data-modal-target="edit-modal<?= $lowerAndNotDash ?>" data-modal-toggle="edit-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-violet-700 rounded-md hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
+                                <button data-popover-target="popover-edit<?= $lowerAndNotDash ?>" data-modal-target="edit-modal<?= $lowerAndNotDash ?>" data-modal-toggle="edit-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-violet-700 rounded-md hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                                     </svg>
                                     <span class="sr-only">Edit</span>
                                 </button>
+                                <div data-popover id="popover-edit<?= $lowerAndNotDash ?>" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-md shadow-md opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                    <div class="px-2 popcover-content">
+                                        <p>Edit</p>
+                                    </div>
+                                    <div data-popper-arrow class="shadow"></div>
+                                </div>
 
-                                <button data-modal-target="delete-modal<?= $lowerAndNotDash ?>" data-modal-toggle="delete-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-red-700 rounded-md hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                <button data-popover-target="popover-delete<?= $lowerAndNotDash ?>" data-modal-target="delete-modal<?= $lowerAndNotDash ?>" data-modal-toggle="delete-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-red-700 rounded-md hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                     <svg class=" w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                                     </svg>
                                     <span class="sr-only">Delete</span>
                                 </button>
+                                <div data-popover id="popover-delete<?= $lowerAndNotDash ?>" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-md shadow-md opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                    <div class="px-2 popcover-content">
+                                        <p>Hapus</p>
+                                    </div>
+                                    <div data-popper-arrow class="shadow"></div>
+                                </div>
 
                                 <div id="edit-modal<?= $lowerAndNotDash ?>" tabindex="-1" aria-hidden="true"
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center  w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -198,6 +210,7 @@ $kode_buku = Helper::generateKdBuku();
                                         </div>
                                     </div>
                                 </div>
+
 
 
                             </div>

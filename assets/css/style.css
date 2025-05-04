@@ -973,9 +973,6 @@
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
-  .end-2 {
-    inset-inline-end: calc(var(--spacing) * 2);
-  }
   .end-2\.5 {
     inset-inline-end: calc(var(--spacing) * 2.5);
   }
@@ -1411,9 +1408,6 @@
       border-bottom-color: var(--color-gray-700) !important;
     }
   }
-  .ml-2 {
-    margin-left: calc(var(--spacing) * 2);
-  }
   .ml-auto {
     margin-left: auto;
   }
@@ -1478,9 +1472,6 @@
   }
   .max-h-full {
     max-height: 100%;
-  }
-  .max-h-screen {
-    max-height: 100vh;
   }
   .datatable-table {
     .datatable-wrapper & {
@@ -1565,9 +1556,6 @@
       text-align: center;
     }
   }
-  .w-1 {
-    width: calc(var(--spacing) * 1);
-  }
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
@@ -1580,17 +1568,11 @@
   .w-5 {
     width: calc(var(--spacing) * 5);
   }
-  .w-6 {
-    width: calc(var(--spacing) * 6);
-  }
   .w-8 {
     width: calc(var(--spacing) * 8);
   }
   .w-12 {
     width: calc(var(--spacing) * 12);
-  }
-  .w-44 {
-    width: calc(var(--spacing) * 44);
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
@@ -1674,9 +1656,6 @@
   }
   .flex-shrink {
     flex-shrink: 1;
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .-translate-x-full {
     --tw-translate-x: -100%;
@@ -2050,12 +2029,6 @@
   .bg-gray-300 {
     background-color: var(--color-gray-300);
   }
-  .bg-gray-500 {
-    background-color: var(--color-gray-500);
-  }
-  .bg-gray-900 {
-    background-color: var(--color-gray-900);
-  }
   .bg-gray-900\/50 {
     background-color: color-mix(in srgb, #111827 50%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2138,18 +2111,6 @@
       fill: white !important;
     }
   }
-  .apexcharts-gridline {
-    stroke: var(--color-gray-200) !important;
-    .dark & {
-      stroke: var(--color-gray-700) !important;
-    }
-  }
-  .apexcharts-xcrosshairs {
-    stroke: var(--color-gray-200) !important;
-    .dark & {
-      stroke: var(--color-gray-700) !important;
-    }
-  }
   .apexcharts-ycrosshairs {
     stroke: var(--color-gray-200) !important;
     .dark & {
@@ -2204,9 +2165,6 @@
   }
   .px-10 {
     padding-inline: calc(var(--spacing) * 10);
-  }
-  .py-0 {
-    padding-block: calc(var(--spacing) * 0);
   }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
@@ -2429,9 +2387,6 @@
   .text-gray-500 {
     color: var(--color-gray-500);
   }
-  .text-gray-700 {
-    color: var(--color-gray-700);
-  }
   .text-gray-800 {
     color: var(--color-gray-800);
   }
@@ -2461,9 +2416,6 @@
   }
   .uppercase {
     text-transform: uppercase;
-  }
-  .underline {
-    text-decoration-line: underline;
   }
   .antialiased {
     -webkit-font-smoothing: antialiased;
@@ -2516,6 +2468,10 @@
     transition-property: transform, translate, scale, rotate;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .duration-300 {
+    --tw-duration: 300ms;
+    transition-duration: 300ms;
   }
   .ease-out {
     --tw-ease: var(--ease-out);
@@ -2595,13 +2551,6 @@
     &:hover {
       @media (hover: hover) {
         color: var(--color-blue-600);
-      }
-    }
-  }
-  .hover\:text-blue-700 {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-blue-700);
       }
     }
   }
@@ -2694,16 +2643,6 @@
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
-    }
-  }
-  .sm\:hidden {
-    @media (width >= 40rem) {
-      display: none;
-    }
-  }
-  .sm\:inline-flex {
-    @media (width >= 40rem) {
-      display: inline-flex;
     }
   }
   .md\:inset-0 {
@@ -3079,6 +3018,10 @@ html {
 }
 body {
   font-family: var(--font-poppins);
+}
+.popcover-content {
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 @layer base {
   .tooltip-arrow,.tooltip-arrow:before {
@@ -3656,6 +3599,10 @@ body {
   syntax: "*";
   inherits: false;
 }
+@property --tw-duration {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-ease {
   syntax: "*";
   inherits: false;
@@ -3714,6 +3661,7 @@ body {
       --tw-drop-shadow-color: initial;
       --tw-drop-shadow-alpha: 100%;
       --tw-drop-shadow-size: initial;
+      --tw-duration: initial;
       --tw-ease: initial;
     }
   }
