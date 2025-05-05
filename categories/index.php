@@ -80,7 +80,6 @@
                 perPage: 5,
                 perPageSelect: [5, 10, 15, 20, 25],
                 sortable: false,
-                // indonesian language
 
                 labels: {
                     placeholder: "Pencarian...",
