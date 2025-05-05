@@ -38,6 +38,14 @@
                             Buku
                         </a>
                     </li>
+                    <li>
+                        <a href="categories/" class="inline-flex items-center px-10 py-3 rounded-lg group hover:text-violet-900 bg-gray-50 hover:bg-gray-100 w-full dark:bg-gray-800 dark:hover:bg-gray-700 dark:hover:text-white">
+                            <svg class="w-5 h-5 mr-2 text-gray-500 dark:text-gray-400 group-hover:text-violet-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11H4m15.5 5a.5.5 0 0 0 .5-.5V8a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44l-1.436-2.12a1 1 0 0 0-.828-.44H8a1 1 0 0 0-1 1M4 9v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44L9.985 8.44A1 1 0 0 0 9.157 8H5a1 1 0 0 0-1 1Z" />
+                            </svg>
+                            Kategori
+                        </a>
+                    </li>
                 </ul>
             </aside>
 
