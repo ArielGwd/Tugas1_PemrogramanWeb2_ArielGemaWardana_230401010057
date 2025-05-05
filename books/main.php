@@ -18,6 +18,10 @@ $kode_buku = Helper::generateKdBuku();
 </div>
 
 <div class="relative overflow-x-auto pt-2 pl-2 mt-6">
+    <?php
+    if (isset($_GET['message'])) {
+        echo htmlspecialchars($_GET['message']);
+    } ?>
     <table id="pagination-table" class="bg-white w-full text-sm text-left text-gray-500 dark:text-gray-400 rounded-lg">
         <thead>
             <tr>
@@ -34,50 +38,58 @@ $kode_buku = Helper::generateKdBuku();
                     Kemajuan Literasi
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    <span class="sr-only">Edit</span>
+                    Kategori
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    <span class="sr-only">Aksi</span>
                 </th>
             </tr>
         </thead>
         <tbody>
             <?php
             include '../config/request.php';
-            $books = $koneksi->query('SELECT * FROM books ORDER BY kd_buku DESC');
+            $query = 'SELECT books.*, categories.name AS category_name 
+                      FROM books 
+                      LEFT JOIN categories ON books.category_id = categories.id 
+                      ORDER BY books.kd_buku DESC';
+            $stmt = $koneksi->prepare($query);
+            $stmt->execute();
+            $books = $stmt->get_result();
 
-            while ($book = $books->fetch_row()) { ?>
+            while ($book = $books->fetch_object()) { ?>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <?= $book[1] ?>
+                        <?= htmlspecialchars($book->title) ?>
                     </th>
                     <td class="px-6 py-4">
-                        <?= $book[2] ?>
+                        <?= htmlspecialchars($book->author) ?>
                     </td>
                     <td class="px-6 py-4">
-                        <?= date('d F Y', strtotime($book[3])) ?>
+                        <?= htmlspecialchars(date('d F Y', strtotime($book->year_published))) ?>
                     </td>
                     <td class="px-6 py-4">
                         <?php
-                        if ($book[4] == 'selesai') { ?>
+                        if ($book->progress == 'selesai') { ?>
                             <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">
                                 Selesai
                             </span>
-                        <?php }
-                        if ($book[4] == 'proses') { ?>
+                        <?php } elseif ($book->progress == 'proses') { ?>
                             <span class="bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-yellow-900 dark:text-yellow-300">
                                 Proses
                             </span>
-                        <?php }
-                        if ($book[4] == 'belum') { ?>
+                        <?php } elseif ($book->progress == 'belum') { ?>
                             <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-red-900 dark:text-red-300">
                                 Belum
                             </span>
-                        <?php }
-                        ?>
+                        <?php } ?>
+                    </td>
+                    <td class="px-6 py-4">
+                        <?= htmlspecialchars($book->category_name) ?>
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <!-- inline-flex 2 button popover and modal edit and delete  -->
                         <div class="inline-flex items-center justify-center w-full">
                             <div class="inline-flex items-center gap-2 justify-center w-full">
-                                <?php $lowerAndNotDash = strtolower(str_replace('-', '', $book[0])); ?>
+                                <?php $lowerAndNotDash = strtolower(str_replace('-', '', $book->kd_buku)); ?>
                                 <button data-popover-target="popover-edit<?= $lowerAndNotDash ?>" data-modal-target="edit-modal<?= $lowerAndNotDash ?>" data-modal-toggle="edit-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-violet-700 rounded-md hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
@@ -108,7 +120,7 @@ $kode_buku = Helper::generateKdBuku();
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center  w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative p-4 w-full max-w-2xl max-h-full">
                                         <?php
-                                        $book = $koneksi->query("SELECT * FROM books WHERE kd_buku='$book[0]'")->fetch_row(); ?>
+                                        $book = $koneksi->query("SELECT * FROM books WHERE kd_buku='$book->kd_buku'")->fetch_object(); ?>
                                         <form class="relative text-left bg-white rounded-lg shadow-sm dark:bg-gray-700 bookForm" action="../Requests/BookRequest.php?action=update" method="POST">
                                             <!-- Modal header -->
                                             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
@@ -127,41 +139,54 @@ $kode_buku = Helper::generateKdBuku();
                                                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                                                     <div>
                                                         <label for="kode-buku" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Buku</label>
-                                                        <input type="text" id="kode-buku" name="kd_buku" aria-label="disabled input 2" value="<?= ($book[0]); ?>" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-violet-500 dark:focus:border-violet-500" readonly>
+                                                        <input type="text" id="kode-buku" name="kd_buku" aria-label="disabled input 2" value="<?= htmlspecialchars($book->kd_buku); ?>" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-violet-500 dark:focus:border-violet-500" readonly>
                                                     </div>
-                                                </div>
-
-                                                <div class="grid gap-6 mb-6 md:grid-cols-2">
                                                     <div>
                                                         <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul Buku <span class="text-red-400">*</span></label>
-                                                        <input type="text" id="title" name="title" value="<?= $book[1] ?>" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500" placeholder="Habibie & Ainun" />
+                                                        <input type="text" id="title" name="title" value="<?= htmlspecialchars($book->title) ?>" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500" placeholder="Habibie & Ainun" />
                                                     </div>
                                                     <div>
                                                         <label for="author" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Author <span class="text-red-400">*</span></label>
-                                                        <input type="text" id="author" name="author" value="<?= $book[2] ?>" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500" placeholder="BJ. Habibie" />
+                                                        <input type="text" id="author" name="author" value="<?= htmlspecialchars($book->author) ?>" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500" placeholder="BJ. Habibie" />
                                                     </div>
                                                     <div>
                                                         <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tahun Terbit <span class="text-red-400">*</span></label>
-                                                        <input type="date" name="year_published" value="<?= $book[3] ?>" required id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500">
+                                                        <input type="date" name="year_published" value="<?= htmlspecialchars($book->year_published) ?>" required id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500">
                                                     </div>
                                                     <div>
                                                         <label for="progress" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kemajuan Baca <span class="text-red-400">*</span></label>
                                                         <?php
-                                                        if ($book[4] == 'selesai') { ?>
+                                                        if ($book->progress == 'selesai') { ?>
                                                             <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-sm dark:bg-green-900 dark:text-green-300">
                                                                 Selesai
                                                             </span>
                                                         <?php } else { ?>
                                                             <select id="progress" name="progress" required class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500">
                                                                 <option>-- Pilih Proses --</option>
-                                                                <option value="selesai" <?php echo $book[4] === 'selesai' ? 'selected' : '' ?>>Selesai</option>
-                                                                <option value="proses" <?php echo $book[4] === 'proses' ? 'selected' : '' ?>>Proses</option>
-                                                                <option value="belum" <?php echo $book[4] === 'belum' ? 'selected' : '' ?>>Belum</option>
+                                                                <option value="selesai" <?php echo $book->progress === 'selesai' ? 'selected' : '' ?>>Selesai</option>
+                                                                <option value="proses" <?php echo $book->progress === 'proses' ? 'selected' : '' ?>>Proses</option>
+                                                                <option value="belum" <?php echo $book->progress === 'belum' ? 'selected' : '' ?>>Belum</option>
                                                             </select>
                                                         <?php } ?>
                                                     </div>
+                                                    <div>
+                                                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori <span class="text-red-400">*</span></label>
+                                                        <select id="category" name="category_id" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500">
+                                                            <option value="">-- Pilih Kategori --</option>
+                                                            <?php
+                                                            $categories = $koneksi->query("SELECT * FROM categories");
+                                                            while ($category = $categories->fetch_object()) { ?>
+                                                                <option value="<?= $category->id ?>" <?= $category->id == $book->category_id ? 'selected' : '' ?>><?= htmlspecialchars($category->name) ?></option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                                                    <textarea id="description" name="description" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500" placeholder="Deskripsi buku"><?= htmlspecialchars($book->description) ?></textarea>
                                                 </div>
                                             </div>
+
                                             <!-- Modal footer -->
                                             <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                                                 <button type="submit" class="btn-loading-submit submitBtn flex items-center justify-center cursor-pointer text-white bg-violet-700 hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
@@ -190,12 +215,12 @@ $kode_buku = Helper::generateKdBuku();
                                                 <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                 </svg>
-                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin menghapus buku <?= $book[1] ?>?</h3>
+                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin menghapus buku <?= $book->title ?>?</h3>
 
                                                 <div class="inline-flex items-center justify-center">
                                                     <form action="../Requests/BookRequest.php?action=delete" method="post"
                                                         class="text-white bookForm cursor-pointer">
-                                                        <input type="hidden" name="kd_buku" value="<?= $book[0] ?>">
+                                                        <input type="hidden" name="kd_buku" value="<?= $book->kd_buku ?>">
                                                         <button type="submit" class="cursor-pointer submitBtn bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                             <svg aria-hidden="true" role="status" class="hidden spinnerForm w-4 h-4 mr-2 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#E5E7EB" />
@@ -210,9 +235,6 @@ $kode_buku = Helper::generateKdBuku();
                                         </div>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
                     </td>
@@ -246,9 +268,6 @@ $kode_buku = Helper::generateKdBuku();
                         <label for="kode-buku" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Buku</label>
                         <input type="text" id="kode-buku" name="kd_buku" aria-label="disabled input 2" value="<?php echo ($kode_buku); ?>" class="bg-gray-300 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-violet-500 dark:focus:border-violet-500" readonly>
                     </div>
-                </div>
-
-                <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Judul Buku <span class="text-red-400">*</span></label>
                         <input type="text" id="title" name="title" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500" placeholder="Habibie & Ainun" />
@@ -270,8 +289,24 @@ $kode_buku = Helper::generateKdBuku();
                             <option value="belum">Belum</option>
                         </select>
                     </div>
+                    <div>
+                        <?php $categories = $koneksi->query("SELECT * FROM categories"); ?>
+                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori <span class="text-red-400">*</span></label>
+
+                        <select id="category" name="category_id" required class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500">
+                            <option>-- Pilih Kategori --</option>
+                            <?php while ($category = $categories->fetch_object()) { ?>
+                                <option value="<?= $category->id ?>"><?= $category->name ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Deskripsi</label>
+                    <textarea id="description" name="description" rows="4" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-violet-500 dark:focus:border-violet-500" placeholder="Deskripsi buku"></textarea>
                 </div>
             </div>
+
             <!-- Modal footer -->
             <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button type="submit" id="submitBtn" class="btn-loading-submit flex items-center justify-center cursor-pointer text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">

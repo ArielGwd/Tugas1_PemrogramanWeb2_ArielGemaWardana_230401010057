@@ -9,8 +9,10 @@ switch ($_GET['action'] ?? '') {
         $author = $_POST['author'];
         $year_published = $_POST['year_published'];
         $progress = $_POST['progress'];
+        $category_id = $_POST['category_id'];
+        $description = $_POST['description'];
 
-        if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($progress)) {
+        if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($progress) || empty($category_id)) {
             header("Location: ../books/index.php");
             break;
         }
@@ -23,8 +25,8 @@ switch ($_GET['action'] ?? '') {
         if ($check->num_rows > 0) {
             echo "Duplicate entry for kd_buku '$kd_buku'. <script>window.location.href='../books/index.php';</script>";
         } else {
-            $data = $koneksi->prepare("INSERT INTO books (kd_buku, title, author, year_published, progress) VALUES (?, ?, ?, ?, ?)");
-            $data->bind_param("sssss", $kd_buku, $title, $author, $year_published, $progress);
+            $data = $koneksi->prepare("INSERT INTO books (kd_buku, title, author, year_published, progress, category_id, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $data->bind_param("sssssis", $kd_buku, $title, $author, $year_published, $progress, $category_id, $description);
             $data->execute();
 
             if (!$data) {
@@ -42,8 +44,10 @@ switch ($_GET['action'] ?? '') {
         $author = $_POST['author'];
         $year_published = $_POST['year_published'];
         $progress = $_POST['progress'];
+        $category_id = $_POST['category_id'];
+        $description = $_POST['description'];
 
-        if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($progress)) {
+        if (empty($kd_buku) || empty($title) || empty($author) || empty($year_published) || empty($category_id)) {
             header("Location: ../books/index.php");
             exit();
         }
@@ -51,17 +55,14 @@ switch ($_GET['action'] ?? '') {
         $check = $koneksi->prepare("SELECT progress FROM books WHERE kd_buku = ?");
         $check->bind_param("s", $kd_buku);
         $check->execute();
-        $result = $check->get_result();
-        $row = $result->fetch_assoc();
-
+        $row = $check->get_result()->fetch_assoc();
         if ($row && $row['progress'] === 'selesai') {
             $progress = 'selesai';
-            header("Location: ../books/index.php?message=Update successful.");
-            exit();
         }
 
-        $data = $koneksi->prepare("UPDATE books SET title=?, author=?, year_published=?, progress=? WHERE kd_buku=?");
-        $data->bind_param("sssss", $title, $author, $year_published, $progress, $kd_buku);
+        $data = $koneksi->prepare("UPDATE books SET title=?, author=?, year_published=?, progress=?, category_id=?, description=? WHERE kd_buku=?");
+        $data->bind_param("ssssiss", $title, $author, $year_published, $progress, $category_id, $description, $kd_buku);
+
         $data->execute();
 
         if (!$data) {
