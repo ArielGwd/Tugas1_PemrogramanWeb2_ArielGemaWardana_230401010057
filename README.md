@@ -12,15 +12,15 @@ table:
 ``` 
 
 ## App Workflow 
-### Persiapan 
+### - Persiapan 
 1. Node.js v20.18.2 ([ Node.js](https://nodejs.org/en/download)) 
 2. PHP 8.0+ atau 8.3.8 (([xampp](https://www.apachefriends.org/download.html) atau [laragon](https://laragon.org/download/)))
 3. MySQL atau MariaDB 
-4. GIT (Opsional) 
+4. GIT (Opsional) https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/blob/main/README.md
 
-### Clone Repository   
+### - Clone Repository   
 1. Buka file manager / Finder / file explorer
-2. Navigasi ke folder tempat Anda ingin menyimpan project, misalnya `xampp\htdocs` (XAMPP) atau `laragon\www` (Laragon)
+2. Kemudian masuk ke folder tempat `xampp\htdocs` (XAMPP) atau `laragon\www` (Laragon)
 3. Lalu klik kanan pada area kosong lalu pilih `Open in Terminal` atau pilih git bash
 4. Kemudian, jalankan code dibawah ini :
 ```bash
@@ -30,7 +30,7 @@ cd Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057
 
 kemudian ke browser buka `http://localhost/tugas1-pemrograman-web2/`
 
-### Install Dependency
+### - Install Dependency
 jika node_modules tidak ada atau beberapa fungsi tidak bisa digunakan, jalankan code dibawah ini :
 ```bash
 npm install
@@ -63,3 +63,14 @@ kemudian buka browser kembali `http://localhost/tugas1-pemrograman-web2/`. Setel
 
 4. Edit Book Modal
 ![Dashboard Page](assets/img/preview/ubah-buku.png)
+
+5. Category Page
+![Dashboard Page](assets/img/preview/kategori.png)
+
+6. Add Category Modal
+![Dashboard Page](assets/img/preview/tambah-kategori.png)
+
+7. Edit Category Modal
+![Dashboard Page](assets/img/preview/ubah-kategori.png)
+
+
