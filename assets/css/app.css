@@ -24,3 +24,33 @@ body {
   padding-top: 4px;
   padding-bottom: 4px;
 }
+
+.background {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.background::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("../img/bg.png") no-repeat right center;
+  background-size: 250px 250px;
+  z-index: -1;
+}
+
+@media screen and (max-width: 768px) {
+  .background::after {
+    background-size: 150px 150px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .background::after {
+    background-size: 120px 120px;
+  }
+}

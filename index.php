@@ -49,7 +49,7 @@
                 </ul>
             </aside>
 
-            <div class="p-6 md:ml-2 bg-white text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full rounded-lg">
+            <div class="background p-6 md:ml-2 bg-white text-medium text-gray-500 dark:text-gray-400 dark:bg-gray-800 rounded-lg w-full rounded-lg">
                 <?php
                 include 'dashboard.php';
                 ?>
