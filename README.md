@@ -24,8 +24,8 @@ table:
 3. Lalu klik kanan pada area kosong lalu pilih `Open in Terminal` atau pilih git bash
 4. Kemudian, jalankan code dibawah ini :
 ```bash
-git clone https://github.com/ArielGwd/tugas1-pemrograman-web2.git
-cd tugas1-pemrograman-web2 
+git clone https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057.git
+cd Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057 
 ```  
 
 kemudian ke browser buka `http://localhost/tugas1-pemrograman-web2/`
