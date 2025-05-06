@@ -17,24 +17,28 @@ switch ($_GET['action'] ?? '') {
             break;
         }
 
-        $check = $koneksi->prepare("SELECT kd_buku FROM books WHERE kd_buku = ?");
-        $check->bind_param("s", $kd_buku);
-        $check->execute();
-        $check->store_result();
+        try {
+            $check = $koneksi->prepare("SELECT kd_buku FROM books WHERE kd_buku = ?");
+            $check->bind_param("s", $kd_buku);
+            $check->execute();
+            $check->store_result();
 
-        if ($check->num_rows > 0) {
-            echo "Duplicate entry for kd_buku '$kd_buku'. <script>window.location.href='../books/index.php';</script>";
-        } else {
-            $data = $koneksi->prepare("INSERT INTO books (kd_buku, title, author, year_published, progress, category_id, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $data->bind_param("sssssis", $kd_buku, $title, $author, $year_published, $progress, $category_id, $description);
-            $data->execute();
-
-            if (!$data) {
-                die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
+            if ($check->num_rows > 0) {
+                echo "Duplicate entry for kd_buku '$kd_buku'. <script>window.location.href='../books/index.php';</script>";
             } else {
-                header("Location: ../books/index.php");
-                exit();
+                $data = $koneksi->prepare("INSERT INTO books (kd_buku, title, author, year_published, progress, category_id, description) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                $data->bind_param("sssssis", $kd_buku, $title, $author, $year_published, $progress, $category_id, $description);
+                $data->execute();
+
+                if (!$data) {
+                    die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
+                } else {
+                    header("Location: ../books/index.php");
+                    exit();
+                }
             }
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
         }
         break;
 
@@ -52,39 +56,47 @@ switch ($_GET['action'] ?? '') {
             exit();
         }
 
-        $check = $koneksi->prepare("SELECT progress FROM books WHERE kd_buku = ?");
-        $check->bind_param("s", $kd_buku);
-        $check->execute();
-        $row = $check->get_result()->fetch_assoc();
-        if ($row && $row['progress'] === 'selesai') {
-            $progress = 'selesai';
-        }
+        try {
+            $check = $koneksi->prepare("SELECT progress FROM books WHERE kd_buku = ?");
+            $check->bind_param("s", $kd_buku);
+            $check->execute();
+            $row = $check->get_result()->fetch_assoc();
+            if ($row && $row['progress'] === 'selesai') {
+                $progress = 'selesai';
+            }
 
-        $data = $koneksi->prepare("UPDATE books SET title=?, author=?, year_published=?, progress=?, category_id=?, description=? WHERE kd_buku=?");
-        $data->bind_param("ssssiss", $title, $author, $year_published, $progress, $category_id, $description, $kd_buku);
+            $data = $koneksi->prepare("UPDATE books SET title=?, author=?, year_published=?, progress=?, category_id=?, description=? WHERE kd_buku=?");
+            $data->bind_param("ssssiss", $title, $author, $year_published, $progress, $category_id, $description, $kd_buku);
 
-        $data->execute();
+            $data->execute();
 
-        if (!$data) {
-            die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
-        } else {
-            header("Location: ../books/index.php");
-            exit();
+            if (!$data) {
+                die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
+            } else {
+                header("Location: ../books/index.php");
+                exit();
+            }
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
         }
         break;
 
     case 'delete':
         $kd_buku = $_POST['kd_buku'];
 
-        $data = $koneksi->prepare("DELETE FROM books WHERE kd_buku=?");
-        $data->bind_param("s", $kd_buku);
-        $data->execute();
+        try {
+            $data = $koneksi->prepare("DELETE FROM books WHERE kd_buku=?");
+            $data->bind_param("s", $kd_buku);
+            $data->execute();
 
-        if (!$data) {
-            die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
-        } else {
-            header("Location: ../books/index.php");
-            exit();
+            if (!$data) {
+                die("Query Error: " . $koneksi->errno . " - " . $koneksi->error);
+            } else {
+                header("Location: ../books/index.php");
+                exit();
+            }
+        } catch (Exception $e) {
+            die("Error: " . $e->getMessage());
         }
         break;
 
