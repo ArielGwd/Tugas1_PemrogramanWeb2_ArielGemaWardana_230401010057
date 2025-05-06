@@ -37,59 +37,58 @@ $kode_buku = Helper::generateKdBuku();
             include '../config/request.php';
             $categories = $koneksi->query('SELECT * FROM categories ORDER BY id DESC');
 
-            while ($category = $categories->fetch_row()) { ?>
+            while ($category = $categories->fetch_object()) { ?>
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <?= $category[1] ?>
+                        <?= $category->name ?>
                     </th>
                     <td class="px-6 py-4">
                         <?php
-                        $bookCount = $koneksi->query("SELECT COUNT(*) FROM books WHERE category_id = '$category[0]'")->fetch_row()[0];
+                        $bookCount = $koneksi->query("SELECT COUNT(*) as count FROM books WHERE category_id = '$category->id'")->fetch_object()->count;
                         echo $bookCount;
                         ?>
                     </td>
                     <td class="px-6 py-4 text-right">
                         <div class="inline-flex items-center justify-center w-full">
                             <div class="inline-flex items-center gap-2 justify-center w-full">
-                                <?php $lowerAndNotDash = strtolower($category[0]); ?>
-                                <button data-popover-target="popover-edit<?= $lowerAndNotDash ?>" data-modal-target="edit-modal<?= $lowerAndNotDash ?>" data-modal-toggle="edit-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-violet-700 rounded-md hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
+                                <button data-popover-target="popover-edit<?= $category->id ?>" data-modal-target="edit-modal<?= $category->id ?>" data-modal-toggle="edit-modal<?= $category->id ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-violet-700 rounded-md hover:bg-violet-800 focus:ring-4 focus:outline-none focus:ring-violet-300 dark:bg-violet-600 dark:hover:bg-violet-700 dark:focus:ring-violet-800">
                                     <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                                     </svg>
                                     <span class="sr-only">Edit</span>
                                 </button>
-                                <div data-popover id="popover-edit<?= $lowerAndNotDash ?>" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-md shadow-md opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                <div data-popover id="popover-edit<?= $category->id ?>" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-md shadow-md opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
                                     <div class="px-2 popcover-content">
                                         <p>Edit</p>
                                     </div>
                                     <div data-popper-arrow class="shadow"></div>
                                 </div>
 
-                                <button data-popover-target="popover-delete<?= $lowerAndNotDash ?>" data-modal-target="delete-modal<?= $lowerAndNotDash ?>" data-modal-toggle="delete-modal<?= $lowerAndNotDash ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-red-700 rounded-md hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                <button data-popover-target="popover-delete<?= $category->id ?>" data-modal-target="delete-modal<?= $category->id ?>" data-modal-toggle="delete-modal<?= $category->id ?>" type="button" class="p-2 text-xs cursor-pointer font-medium text-center inline-flex items-center text-white bg-red-700 rounded-md hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
                                     <svg class=" w-4 h-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                                     </svg>
                                     <span class="sr-only">Delete</span>
                                 </button>
-                                <div data-popover id="popover-delete<?= $lowerAndNotDash ?>" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-md shadow-md opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                                <div data-popover id="popover-delete<?= $category->id ?>" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-md shadow-md opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
                                     <div class="px-2 popcover-content">
                                         <p>Hapus</p>
                                     </div>
                                     <div data-popper-arrow class="shadow"></div>
                                 </div>
 
-                                <div id="edit-modal<?= $lowerAndNotDash ?>" tabindex="-1" aria-hidden="true"
+                                <div id="edit-modal<?= $category->id ?>" tabindex="-1" aria-hidden="true"
                                     class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center  w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative p-4 w-full max-w-2xl max-h-full">
                                         <?php
-                                        $category = $koneksi->query("SELECT * FROM categories WHERE id='$category[0]'")->fetch_row(); ?>
+                                        $category = $koneksi->query("SELECT * FROM categories WHERE id='$category->id'")->fetch_object(); ?>
                                         <form class="relative text-left bg-white rounded-lg shadow-sm dark:bg-gray-700 bookForm" action="../Requests/CategoryRequest.php?action=update" method="POST">
                                             <!-- Modal header -->
                                             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
                                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                                     Edit Data Buku
                                                 </h3>
-                                                <button type="button" class="cursor-pointer text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="edit-modal<?= $lowerAndNotDash ?>">
+                                                <button type="button" class="cursor-pointer text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="edit-modal<?= $category->id ?>">
                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                                     </svg>
@@ -113,10 +112,10 @@ $kode_buku = Helper::generateKdBuku();
                                                         </div>
                                                     </div>
                                                 <?php } ?>
-                                                <input type="hidden" name="id" value="<?= $category[0] ?>">
+                                                <input type="hidden" name="id" value="<?= $category->id ?>">
                                                 <div>
                                                     <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Jenis Buku</label>
-                                                    <input type="text" id="name" name="name" value="<?= $category[1] ?>" required aria-label="input name" placeholder="Novel, Komik, dll"
+                                                    <input type="text" id="name" name="name" value="<?= $category->name ?>" required aria-label="input name" placeholder="Novel, Komik, dll"
                                                         class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-violet-500 dark:focus:border-violet-500">
                                                 </div>
                                             </div>
@@ -129,16 +128,16 @@ $kode_buku = Helper::generateKdBuku();
                                                     </svg>
                                                     <span class="btn-text text-white submitText">Ubah</span>
                                                 </button>
-                                                <button data-modal-hide="edit-modal<?= $lowerAndNotDash ?>" type="button" class="cursor-pointer py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-violet-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Batal</button>
+                                                <button data-modal-hide="edit-modal<?= $category->id ?>" type="button" class="cursor-pointer py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-violet-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Batal</button>
                                             </div>
                                         </form>
                                     </div>
                                 </div>
 
-                                <div id="delete-modal<?= $lowerAndNotDash ?>" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div id="delete-modal<?= $category->id ?>" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative p-4 w-full max-w-md max-h-full">
                                         <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                                            <button type="button" class="absolute cursor-pointer top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="delete-modal<?= $lowerAndNotDash ?>">
+                                            <button type="button" class="absolute cursor-pointer top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="delete-modal<?= $category->id ?>">
                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                                 </svg>
@@ -148,13 +147,13 @@ $kode_buku = Helper::generateKdBuku();
                                                 <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                 </svg>
-                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin menghapus buku <?= $category[1] ?>?</h3>
+                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Apakah anda yakin menghapus data <?= $category->name ?>? semua data <?= $category->name ?> yang ada di buku akan terhapus juga.</h3>
 
                                                 <div class="inline-flex items-center justify-center">
                                                     <form action="../Requests/CategoryRequest.php?action=delete" method="post"
                                                         class="text-white bookForm cursor-pointer">
 
-                                                        <input type="hidden" name="id" value="<?= $category[0] ?>">
+                                                        <input type="hidden" name="id" value="<?= $category->id ?>">
 
                                                         <button type="submit" class="cursor-pointer submitBtn bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                             <svg aria-hidden="true" role="status" class="hidden spinnerForm w-4 h-4 mr-2 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,7 +163,7 @@ $kode_buku = Helper::generateKdBuku();
                                                             <span class="btn-text text-white submitText">Hapus</span>
                                                         </button>
                                                     </form>
-                                                    <button data-modal-hide="delete-modal<?= $lowerAndNotDash ?>" type="button" class="cursor-pointer py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-violet-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Batal</button>
+                                                    <button data-modal-hide="delete-modal<?= $category->id ?>" type="button" class="cursor-pointer py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-violet-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Batal</button>
                                                 </div>
                                             </div>
                                         </div>
