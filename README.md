@@ -4,15 +4,15 @@ Bookshelf adalah sebuah aplikasi mini crud tentang catatan buku yang dibaca oleh
 Pada aplikasi ini style mysqli yang digunakan ialah object-oriented. Pada [config/Database.php](https://github.com/ArielGwd/tugas1-pemrograman-web2/blob/main/config/Database.php) di baris [13](https://github.com/ArielGwd/tugas1-pemrograman-web2/blob/72b1c8c8d7a404a47a7374d0dcbf182c6ecbb305/config/Database.php#L13) terdapat `new mysqli()` yang dimana digunakan untuk koneksi ke database mysql. 
 
 ## Daftar isi
-- [Daftar isi](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#daftar-isi)
-- [Persiapan](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#persiapan)
-  - [Clone Repository](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#--clone-repository)
-  - [Install Dependency](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#--install-dependency)
-- [Alur Kerja Aplikasi](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#alur-kerja-aplikasi)
-- [Fitur](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#fitur)
-- [Tech stack](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#tech-stack)
-- [Struktur Database](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#struktur-database)
-- [Preview](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/edit/main/README.md#preview)
+- [Daftar isi](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#daftar-isi)
+- [Persiapan](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#persiapan)
+  - [Clone Repository](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#--clone-repository)
+  - [Install Dependency](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#--install-dependency)
+- [Alur Kerja Aplikasi](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#alur-kerja-aplikasi)
+- [Fitur](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#fitur)
+- [Tech stack](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#tech-stack)
+- [Struktur Database](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/#struktur-database)
+- [Preview](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/#preview)
 
 ## Persiapan 
 1. Node.js v20.18.2 ([ Node.js](https://nodejs.org/en/download)) 
