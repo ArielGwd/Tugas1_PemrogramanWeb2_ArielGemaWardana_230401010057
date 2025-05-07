@@ -48,10 +48,10 @@ Aplikasi memiliki menu yaitu dashboard, buku, dan kategori. masing-masing memili
 - Halaman `Kategori` : Menampilkan data `categories` dari database.
 
 Pada menu atau halaman [Buku](books/main.php) dan [Kategori](categories/main.php) terdapat Input `CREATE` atau `UPDATE` :
-- proses input (`CREATE`) yaitu terdapat button atau tombol tambah, dan ketika diklik akan menampilkan pop up kemudian user dapat mengisi form yang ada di pop up tersebut. hasil dari input tersebut akan dikirim ke [Requests/BookRequest.php](Requests/BookRequest.php) untuk buku atau [Requests/CategoryRequest.php](Requests/CategoryRequest.php) untuk kategori melalui get parameter yaitu `?action=add` dan dengan method POST.
-- proses input (`UPDATE`) yaitu sama seperti proses input (`CREATE`) namun yang membedakan ialah value dari get parameternya saja yaitu `?action=update`
+- proses input (`CREATE`) yaitu terdapat button atau tombol tambah, dan ketika diklik akan menampilkan pop up kemudian user dapat mengisi form yang ada di pop up tersebut. hasil dari input tersebut akan dikirim dan diproses ke [Requests/BookRequest.php](Requests/BookRequest.php) untuk buku atau [Requests/CategoryRequest.php](Requests/CategoryRequest.php) untuk kategori melalui GET parameter yaitu `?action=add` dan dengan method POST. Jika prosesnya berhasil maka akan dikembalikan ke halaman Buku dan Kategori. 
+- proses input (`UPDATE`) yaitu sama seperti proses input (`CREATE`) namun yang membedakan ialah value dari GET parameternya saja yaitu `?action=update`
 
-Selain itu juga menu atau halaman [Buku](books/main.php) dan [Kategori](categories/main.php) terdapat `DELETE` pada button atau tombol berwarna merah di menu atau halaman Buku dan Kategori. Button tersebut dapat diklik dan akan menampilkan sebuah modal atau pop up yaitu peringatan apakah user ingin menghapus data tersebut atau tidak. jika iya maka akan diproses ke [Requests/BookRequest.php](Requests/BookRequest.php) untuk buku atau [Requests/CategoryRequest.php](Requests/CategoryRequest.php) untuk kategori melalui get parameter yaitu `?action=delete`. 
+Selain itu juga menu atau halaman [Buku](books/main.php) dan [Kategori](categories/main.php) terdapat `DELETE` pada button atau tombol berwarna merah di menu atau halaman Buku dan Kategori. Button tersebut dapat diklik dan akan menampilkan sebuah modal atau pop up yaitu peringatan apakah user ingin menghapus data tersebut atau tidak. jika iya maka akan diproses ke [Requests/BookRequest.php](Requests/BookRequest.php) untuk buku atau [Requests/CategoryRequest.php](Requests/CategoryRequest.php) untuk kategori melalui GET parameter yaitu `?action=delete`. Jika prosesnya berhasil maka akan dikembalikan ke halaman Buku dan Kategori. 
 
 ## Fitur
 - Create
