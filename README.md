@@ -65,7 +65,7 @@ Selain itu juga menu atau halaman [Buku](books/main.php) dan [Kategori](categori
 [![Tech](https://skillicons.dev/icons?i=tailwind,php,mysql,js,npm&perline=6)](https://skillicons.dev)
   
 ## Struktur Database
-struktur database [SQL](tugas_web2_arielgema.sql) atau bisa dilihat dibawah ini
+struktur database [SQL](tugas_web2_arielgema.sql) atau [Gambar](assets/img/preview/database.png) atau dibawah ini
 ```bash
 Database: tugas_web2_arielgema 
 
