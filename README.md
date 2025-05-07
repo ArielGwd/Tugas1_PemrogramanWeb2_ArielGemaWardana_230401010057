@@ -1,7 +1,7 @@
 # Bookshelf - App Mini CRUD (PHP)
 Bookshelf adalah sebuah aplikasi mini crud tentang catatan buku yang dibaca oleh pengguna.   
 
-Pada aplikasi ini style mysqli yang digunakan ialah object-oriented. Pada [config/Database.php](https://github.com/ArielGwd/tugas1-pemrograman-web2/blob/main/config/Database.php) di baris [13](https://github.com/ArielGwd/tugas1-pemrograman-web2/blob/72b1c8c8d7a404a47a7374d0dcbf182c6ecbb305/config/Database.php#L13) terdapat `new mysqli()` yang dimana digunakan untuk koneksi ke database mysql. 
+Pada aplikasi ini style mysqli yang digunakan ialah object-oriented. Pada [config/Database.php](https://github.com/ArielGwd/tugas1-pemrograman-web2/blob/main/config/Database.php) di baris [[13](https://github.com/ArielGwd/tugas1-pemrograman-web2/blob/72b1c8c8d7a404a47a7374d0dcbf182c6ecbb305/config/Database.php#L13)] terdapat pemanggilan `new mysqli()` yang berfungsi untuk membuka koneksi ke database MySQL. Kemudian pada [Requests/BookRequest.php](Requests/BookRequest.php) di baris [[29](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/blob/0958dff9c39bfa57eb4302a0ff5a4051fdb51bbc/Requests/BookRequest.php#L29)] dan [Requests/BookRequest.php](Requests/CategoryRequest.php) di baris [[16](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/blob/0958dff9c39bfa57eb4302a0ff5a4051fdb51bbc/Requests/CategoryRequest.php#L16)] terdapat penggunaan prepared statement MySQLi (object style) melalui metode `prepare()` yang menyediakan fitur keamanan untuk perintah yang memodifikasi isi tabel seperti `INSERT` atau `UPDATE`. kemudian berikutnya, pada [Requests/BookRequest.php](Requests/BookRequest.php) di baris [[30](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/blob/0958dff9c39bfa57eb4302a0ff5a4051fdb51bbc/Requests/BookRequest.php#L30)] dan [Requests/BookRequest.php](Requests/CategoryRequest.php) di baris [[17](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057/blob/0958dff9c39bfa57eb4302a0ff5a4051fdb51bbc/Requests/CategoryRequest.php#L17)] terdapat bind parameter `bind_param()` yang mengikat variabel PHP ke placeholder `?` dalam SQL pada baris sebelumnya dan sekaligus mendefinisikan tipe data setiap parameter misalnya `sssssis`.
 
 ## Daftar isi
 - [Daftar isi](https://github.com/ArielGwd/Tugas1_PemrogramanWeb2_ArielGemaWardana_230401010057#daftar-isi)
@@ -42,10 +42,16 @@ npm run build
 kemudian buka browser kembali `http://localhost/tugas1-pemrograman-web2/`. Setelah itu, cek kembali apakah bisa digunakan tombol-tombol dan beberapa fungsi lainnya
 
 ## Alur Kerja Aplikasi
-aplikasi memiliki menu yaitu dashboard, buku, dan kategori. masing-masing memiliki alurnya sendiri yaitu :
+Aplikasi memiliki menu yaitu dashboard, buku, dan kategori. masing-masing memiliki alurnya sendiri yaitu :
 - Halaman `Dashboard` : Menampilkan halaman awal.
-- Halaman `Buku` : Menampilkan data `books` dari database. kemudian terdapat sebuah button atau tombol yaitu `tambah`, dimana button tersebut ketika diklik akan menampilkan modal atau pop up untuk menginput data. begitupun untuk button `edit` dan `hapus` akan menampilkan popup, pop up `edit` akan menampilkan inputan edit dan pop up `hapus` akan menampilkan pop konfirmasi untuk menghapus data.
-- Halaman `Kategori` : Menampilkan data `categories` dari database. kemudian terdapat sebuah button atau tombol yaitu `tambah`, dimana button tersebut ketika diklik akan menampilkan modal atau pop up untuk menginput data. begitupun untuk button `edit` dan `hapus` akan menampilkan popup, pop up `edit` akan menampilkan inputan edit dan pop up `hapus` akan menampilkan pop konfirmasi untuk menghapus data.
+- Halaman `Buku` : Menampilkan data `books` dari database.
+- Halaman `Kategori` : Menampilkan data `categories` dari database.
+
+Pada menu atau halaman [Buku](books/main.php) dan [Kategori](categories/main.php) terdapat Input `CREATE` atau `UPDATE` :
+- proses input (`CREATE`) yaitu terdapat button atau tombol tambah, dan ketika diklik akan menampilkan pop up kemudian user dapat mengisi form yang ada di pop up tersebut. hasil dari input tersebut akan dikirim ke [Requests/BookRequest.php](Requests/BookRequest.php) untuk buku atau [Requests/CategoryRequest.php](Requests/CategoryRequest.php) untuk kategori melalui get parameter yaitu `?action=add` dan dengan method POST.
+- proses input (`UPDATE`) yaitu sama seperti proses input (`CREATE`) namun yang membedakan ialah value dari get parameternya saja yaitu `?action=update`
+
+Selain itu juga menu atau halaman [Buku](books/main.php) dan [Kategori](categories/main.php) terdapat `DELETE` pada button atau tombol berwarna merah di menu atau halaman Buku dan Kategori. Button tersebut dapat diklik dan akan menampilkan sebuah modal atau pop up yaitu peringatan apakah user ingin menghapus data tersebut atau tidak. jika iya maka akan diproses ke [Requests/BookRequest.php](Requests/BookRequest.php) untuk buku atau [Requests/CategoryRequest.php](Requests/CategoryRequest.php) untuk kategori melalui get parameter yaitu `?action=delete`. 
 
 ## Fitur
 - Create
@@ -101,5 +107,3 @@ categories: {
 
 7. Edit Category Modal
 ![Dashboard Page](assets/img/preview/ubah-kategori.png)
-
-
